@@ -12,8 +12,8 @@ package:
   version: 1.0.0
 
 build:
-  skip: True  [not win]
-  number: 2
+  skip: True # [not win]
+  number: 3
 
 outputs:
   - name: vs{{ vsyear }}_{{ cross_compiler_target_platform }}

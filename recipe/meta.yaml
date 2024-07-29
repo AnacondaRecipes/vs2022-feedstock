@@ -1,6 +1,6 @@
-# version numbering is explained at https://stackoverflow.com/questions/42730478/version-numbers-for-visual-studio-2017-boost-and-cmake
+# version numbering is explained at https://devblogs.microsoft.com/cppblog/msvc-toolset-minor-version-number-14-40-in-vs-2022-v17-10/
 #     This version number follows the "platform toolset"
-{% set vcver="14.3" %}
+{% set vcver="14.40" %}
 {% set vsyear="2022" %}
 # VS2022 is fundamentally compatible with VS2015.  We name our package vs2015_runtime so that it can't be
 #    mixed up with the runtime from VS2015 - you do actually need VS2017 runtime for things compiled with

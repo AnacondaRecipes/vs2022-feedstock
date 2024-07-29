@@ -26,7 +26,7 @@ for /f "usebackq tokens=*" %%i in (`vswhere.exe -nologo -products * -version ^[1
   set "VSINSTALLDIR=%%i\"
 )
 if not exist "%VSINSTALLDIR%" (
-    :: VS2019 install but with vs2017 compiler stuff installed
+    :: VS2022 install but with vs2017/vs2019 compiler stuff installed
 	for /f "usebackq tokens=*" %%i in (`vswhere.exe -nologo -products * -requires Microsoft.VisualStudio.Component.VC.v143.x86.x64 -property installationPath`) do (
 	:: There is no trailing back-slash from the vswhere, and may make vcvars64.bat fail, so force add it
 	set "VSINSTALLDIR=%%i\"
@@ -60,7 +60,7 @@ for /F %%i in ('dir /ON /B "%WindowsSdkDir%\include"') DO (
   )
 )
 if errorlevel 1 (
-    echo "Didn't find any windows 10/11 SDK. I'm not sure if things will work, but let's try..."
+    echo "Didn't find any windows 10 SDK. I'm not sure if things will work, but let's try..."
 ) else (
     echo Windows SDK version found as: "%WindowsSDKVer%"
 )
@@ -75,7 +75,7 @@ IF "@cross_compiler_target_platform@" == "win-64" (
 
 pushd %VSINSTALLDIR%
 set VSCMD_DEBUG=1
-CALL "VC\Auxiliary\Build\vcvars%BITS%.bat" -vcvars_ver=14.3 %WindowsSDKVer%
+CALL "VC\Auxiliary\Build\vcvars%BITS%.bat" -vcvars_ver=14.40 %WindowsSDKVer%
 popd
 
 IF "%CMAKE_GENERATOR%" == "" SET "CMAKE_GENERATOR=%CMAKE_GEN%"

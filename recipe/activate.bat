@@ -4,9 +4,9 @@ SET DISTUTILS_USE_SDK=1
 :: This is probably not good. It is for the pre-UCRT msvccompiler.py *not* _msvccompiler.py
 SET MSSdk=1
 
-SET "VS_VERSION=16.5"
-SET "VS_MAJOR=16"
-SET "VS_YEAR=2019"
+SET "VS_VERSION=17.10"
+SET "VS_MAJOR=17"
+SET "VS_YEAR=2022"
 
 set "MSYS2_ARG_CONV_EXCL=/AI;/AL;/OUT;/out"
 set "MSYS2_ENV_CONV_EXCL=CL"
@@ -20,29 +20,29 @@ set "CXX=cl.exe"
 set "CC=cl.exe"
 
 set "VSINSTALLDIR="
-:: Try to find actual vs2017 installations
-for /f "usebackq tokens=*" %%i in (`vswhere.exe -nologo -products * -version ^[16.0^,17.0^] -property installationPath`) do (
+:: Try to find actual vs2022 installations
+for /f "usebackq tokens=*" %%i in (`vswhere.exe -nologo -products * -version ^[17.0^,18.0^] -property installationPath`) do (
   :: There is no trailing back-slash from the vswhere, and may make vcvars64.bat fail, so force add it
   set "VSINSTALLDIR=%%i\"
 )
 if not exist "%VSINSTALLDIR%" (
     :: VS2019 install but with vs2017 compiler stuff installed
-	for /f "usebackq tokens=*" %%i in (`vswhere.exe -nologo -products * -requires Microsoft.VisualStudio.Component.VC.v142.x86.x64 -property installationPath`) do (
+	for /f "usebackq tokens=*" %%i in (`vswhere.exe -nologo -products * -requires Microsoft.VisualStudio.Component.VC.v143.x86.x64 -property installationPath`) do (
 	:: There is no trailing back-slash from the vswhere, and may make vcvars64.bat fail, so force add it
 	set "VSINSTALLDIR=%%i\"
 	)
 )
 if not exist "%VSINSTALLDIR%" (
-set "VSINSTALLDIR=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Professional\"
+set "VSINSTALLDIR=%ProgramFiles(x86)%\Microsoft Visual Studio\2022\Professional\"
 )
 if not exist "%VSINSTALLDIR%" (
-set "VSINSTALLDIR=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\"
+set "VSINSTALLDIR=%ProgramFiles(x86)%\Microsoft Visual Studio\2022\Community\"
 )
 if not exist "%VSINSTALLDIR%" (
-set "VSINSTALLDIR=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\BuildTools\"
+set "VSINSTALLDIR=%ProgramFiles(x86)%\Microsoft Visual Studio\2022\BuildTools\"
 )
 if not exist "%VSINSTALLDIR%" (
-set "VSINSTALLDIR=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\"
+set "VSINSTALLDIR=%ProgramFiles(x86)%\Microsoft Visual Studio\2022\Enterprise\"
 )
 
 IF NOT "%CONDA_BUILD%" == "" (
@@ -60,7 +60,7 @@ for /F %%i in ('dir /ON /B "%WindowsSdkDir%\include"') DO (
   )
 )
 if errorlevel 1 (
-    echo "Didn't find any windows 10 SDK. I'm not sure if things will work, but let's try..."
+    echo "Didn't find any windows 10/11 SDK. I'm not sure if things will work, but let's try..."
 ) else (
     echo Windows SDK version found as: "%WindowsSDKVer%"
 )
@@ -75,7 +75,7 @@ IF "@cross_compiler_target_platform@" == "win-64" (
 
 pushd %VSINSTALLDIR%
 set VSCMD_DEBUG=1
-CALL "VC\Auxiliary\Build\vcvars%BITS%.bat" -vcvars_ver=14.2 %WindowsSDKVer%
+CALL "VC\Auxiliary\Build\vcvars%BITS%.bat" -vcvars_ver=14.3 %WindowsSDKVer%
 popd
 
 IF "%CMAKE_GENERATOR%" == "" SET "CMAKE_GENERATOR=%CMAKE_GEN%"

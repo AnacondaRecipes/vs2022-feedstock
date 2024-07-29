@@ -7,13 +7,13 @@ if "%ARCH%"=="64" (
    set VC_PATH=x64
 )
 
-set MSC_VER=2019
+set MSC_VER=2022
 
-REM ========== This one comes from visual studio 2017
-set "VC_VER=142"
+REM ========== This one comes from visual studio 2022
+set "VC_VER=143"
 
 set "BT_ROOT="
-for /f "usebackq tokens=*" %%i in (`vswhere.exe -nologo -products * -version ^[16.0^,17.0^] -property installationPath`) do (
+for /f "usebackq tokens=*" %%i in (`vswhere.exe -nologo -products * -version ^[17.0^,18.0^] -property installationPath`) do (
   :: There is no trailing back-slash from the vswhere, and may make vcvars64.bat fail, so force add it
   set "BT_ROOT=%%i\"
 )
@@ -45,10 +45,11 @@ if %ERRORLEVEL% GTR 8 exit 1
 robocopy "%REDIST_ROOT%\Microsoft.VC%VC_VER%.OpenMP" "%PREFIX%" *.dll /E
 if %ERRORLEVEL% GTR 8 exit 1
 
-REM ========== REQUIRES Win 10 SDK be installed, or files otherwise copied to location below!
-robocopy "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\%VC_PATH%"  "%LIBRARY_BIN%" *.dll /E
+REM ========== REQUIRES Win 10/11 SDK be installed, or files otherwise copied to location below!
+C:\Program Files (x86)\Windows Kits\10\Redist\%sdk_version%\ucrt\DLLs\%VC_PATH%
+robocopy "C:\Program Files (x86)\Windows Kits\10\Redist\%sdk_version%\ucrt\DLLs\%VC_PATH%"  "%LIBRARY_BIN%" *.dll /E
 if %ERRORLEVEL% GEQ 8 exit 1
-robocopy "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\%VC_PATH%"  "%PREFIX%" *.dll /E
+robocopy "C:\Program Files (x86)\Windows Kits\10\Redist\%sdk_version%\ucrt\DLLs\%VC_PATH%"  "%PREFIX%" *.dll /E
 if %ERRORLEVEL% GEQ 8 exit 1
-COPY "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\%VC_PATH%\ucrtbase.dll" "%LIBRARY_BIN%"
-COPY "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\%VC_PATH%\ucrtbase.dll" "%PREFIX%"
+COPY "C:\Program Files (x86)\Windows Kits\10\Redist\%sdk_version%\ucrt\DLLs\%VC_PATH%\ucrtbase.dll" "%LIBRARY_BIN%"
+COPY "C:\Program Files (x86)\Windows Kits\10\Redist\%sdk_version%\ucrt\DLLs\%VC_PATH%\ucrtbase.dll" "%PREFIX%"

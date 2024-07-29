@@ -59,7 +59,7 @@ outputs:
     about:
       summary: MSVC runtimes associated with cl.exe version {{ cl_version  }} (VS {{ vsyear }} update {{ update_version }})
   - name: vc
-    version: {{ vcver }}
+    version: "{{ vcver }}"
     build:
       track_features:
         - vc{{ vcver.split(".")[0] }}

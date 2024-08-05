@@ -46,7 +46,6 @@ robocopy "%REDIST_ROOT%\Microsoft.VC%VC_VER%.OpenMP" "%PREFIX%" *.dll /E
 if %ERRORLEVEL% GTR 8 exit 1
 
 REM ========== REQUIRES Win 10/11 SDK be installed, or files otherwise copied to location below!
-C:\Program Files (x86)\Windows Kits\10\Redist\%sdk_version%\ucrt\DLLs\%VC_PATH%
 robocopy "C:\Program Files (x86)\Windows Kits\10\Redist\%sdk_version%\ucrt\DLLs\%VC_PATH%"  "%LIBRARY_BIN%" *.dll /E
 if %ERRORLEVEL% GEQ 8 exit 1
 robocopy "C:\Program Files (x86)\Windows Kits\10\Redist\%sdk_version%\ucrt\DLLs\%VC_PATH%"  "%PREFIX%" *.dll /E

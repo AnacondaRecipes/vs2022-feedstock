@@ -66,11 +66,11 @@ if errorlevel 1 (
 )
 
 IF "@cross_compiler_target_platform@" == "win-64" (
-  set "CMAKE_GEN=Visual Studio @VER@ @YEAR@ Win64"
   set "BITS=64"
+  set "CMAKE_PLAT=Win64"
 ) else (
-  set "CMAKE_GEN=Visual Studio @VER@ @YEAR@"
   set "BITS=32"
+  set "CMAKE_PLAT=Win32"
 )
 
 pushd %VSINSTALLDIR%
@@ -78,7 +78,14 @@ set VSCMD_DEBUG=1
 CALL "VC\Auxiliary\Build\vcvars%BITS%.bat" -vcvars_ver=14.40 %WindowsSDKVer%
 popd
 
+:: CMAKE configuration
+:: See: https://cmake.org/cmake/help/latest/generator/Visual%20Studio%2017%202022.html
+:: See: https://cmake.org/cmake/help/latest/variable/CMAKE_GENERATOR_TOOLSET.html
+:: See: https://cmake.org/cmake/help/latest/variable/CMAKE_GENERATOR_PLATFORM.html
+set "CMAKE_GEN=Visual Studio @VER@ @YEAR@"
 IF "%CMAKE_GENERATOR%" == "" SET "CMAKE_GENERATOR=%CMAKE_GEN%"
+IF "%CMAKE_GENERATOR_PLATFORM%" == "" SET "CMAKE_GENERATOR_PLATFORM=%CMAKE_PLAT%"
+IF "%CMAKE_GENERATOR_TOOLSET%" == "" SET "CMAKE_GENERATOR_TOOLSET=v143"
 
 :GetWin10SdkDir
 call :GetWin10SdkDirHelper HKLM\SOFTWARE\Wow6432Node > nul 2>&1

@@ -25,10 +25,10 @@ outputs:
       run_exports:
         strong:
           # compatible within major version.  This is MSFT's incrementing of the UCRT version.  It was
-          #    14.0 with VS2015, 14.1 with VS2017, and 14.2 with VS2019 - if the major version changes, we're assuming
-          #    that binary compatibility breaks.  This has a minimum bound equal to vcver, so building with
-          #    vs2017 here will require the vs2017-era runtime (the package is named vs2015_runtime, but the
-          #    version differs)
+          #    14.0 with VS2015, 14.1 with VS2017, 14.2 with VS2019 and now 14.40 with VS2022.
+          #    If the major version changes, we're assuming that binary compatibility breaks.  
+          #    This has a minimum bound equal to vcver, so building with vs2022 here will require 
+          #    the vs2022-era runtime (the package is named vs2015_runtime, but the version differs)
           - {{ pin_subpackage('vc') }}
           - {{ pin_subpackage('vs' + runtime_year + '_runtime') }}
     requirements:

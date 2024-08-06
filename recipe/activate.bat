@@ -4,9 +4,9 @@ SET DISTUTILS_USE_SDK=1
 :: This is probably not good. It is for the pre-UCRT msvccompiler.py *not* _msvccompiler.py
 SET MSSdk=1
 
-SET "VS_VERSION=17.10"
-SET "VS_MAJOR=17"
-SET "VS_YEAR=2022"
+SET "VS_VERSION=@VER@.@update_version@"
+SET "VS_MAJOR=@VER@"
+SET "VS_YEAR=@YEAR@"
 
 set "MSYS2_ARG_CONV_EXCL=/AI;/AL;/OUT;/out"
 set "MSYS2_ENV_CONV_EXCL=CL"

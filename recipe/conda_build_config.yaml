@@ -11,6 +11,8 @@ cl_version:
 # this version follows the version number reported for the vcruntim140.dll file.
 #     This will be in a folder like C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Redist\MSVC\14.40.33807\x64\Microsoft.VC143.CRT
 #     Note the 14.40.33807 in there - that's what we want, but in case their folder scheme changes, it's better to base it on the version of the file itself.
+tools_version:
+  - 14.40.33807
 runtime_version:
   - 14.40.33807
 # SDK release page: https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/

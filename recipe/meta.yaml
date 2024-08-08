@@ -1,10 +1,10 @@
-# version numbering is explained at https://stackoverflow.com/questions/42730478/version-numbers-for-visual-studio-2017-boost-and-cmake
+# version numbering is explained at https://devblogs.microsoft.com/cppblog/msvc-toolset-minor-version-number-14-40-in-vs-2022-v17-10/
 #     This version number follows the "platform toolset"
-{% set vcver="14.2" %}
-{% set vsyear="2019" %}
-# VS2019 is fundamentally compatible with VS2015.  We name our package vs2015_runtime so that it can't be
+{% set vcver="14.40" %}
+{% set vsyear="2022" %}
+# VS2022 is fundamentally compatible with VS2015.  We name our package vs2015_runtime so that it can't be
 #    mixed up with the runtime from VS2015 - you do actually need VS2017 runtime for things compiled with
-#    VS2017, and the runtime we have here is backwards-compatible with things compiled with VS2015.
+#    VS2019, VS2017, and the runtime we have here is backwards-compatible with things compiled with VS2015.
 {% set runtime_year="2015" %}
 
 package:
@@ -13,7 +13,7 @@ package:
 
 build:
   skip: True # [not win]
-  number: 4
+  number: 0
 
 outputs:
   - name: vs{{ vsyear }}_{{ cross_compiler_target_platform }}
@@ -25,10 +25,10 @@ outputs:
       run_exports:
         strong:
           # compatible within major version.  This is MSFT's incrementing of the UCRT version.  It was
-          #    14.0 with VS2015, and 14.1 with VS2017 - if the major version changes, we're assuming
-          #    that binary compatibility breaks.  This has a minimum bound equal to vcver, so building with
-          #    vs2017 here will require the vs2017-era runtime (the package is named vs2015_runtime, but the
-          #    version differs)
+          #    14.0 with VS2015, 14.1 with VS2017, 14.2 with VS2019 and now 14.40 with VS2022.
+          #    If the major version changes, we're assuming that binary compatibility breaks.  
+          #    This has a minimum bound equal to vcver, so building with vs2022 here will require 
+          #    the vs2022-era runtime (the package is named vs2015_runtime, but the version differs)
           - {{ pin_subpackage('vc') }}
           - {{ pin_subpackage('vs' + runtime_year + '_runtime') }}
     requirements:
@@ -59,7 +59,7 @@ outputs:
     about:
       summary: MSVC runtimes associated with cl.exe version {{ cl_version  }} (VS {{ vsyear }} update {{ update_version }})
   - name: vc
-    version: {{ vcver }}
+    version: "{{ vcver }}"
     build:
       track_features:
         - vc{{ vcver.split(".")[0] }}

@@ -66,16 +66,18 @@ if errorlevel 1 (
 )
 
 IF "@cross_compiler_target_platform@" == "win-64" (
+  set "target_platform=amd64"
   set "BITS=64"
   set "CMAKE_PLAT=Win64"
 ) else (
+  set "target_platform=x86"
   set "BITS=32"
   set "CMAKE_PLAT=Win32"
 )
 
 pushd %VSINSTALLDIR%
 set VSCMD_DEBUG=1
-CALL "VC\Auxiliary\Build\vcvars%BITS%.bat" -vcvars_ver=14.40 %WindowsSDKVer%
+CALL "VC\Auxiliary\Build\vcvars%BITS%.bat" -vcvars_ver=14.41 %WindowsSDKVer%
 popd
 
 :: CMAKE configuration

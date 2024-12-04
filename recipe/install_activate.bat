@@ -5,4 +5,5 @@ sed -i 's/@YEAR@/%YEAR%/g' vs%YEAR%_compiler_vars.bat
 sed -i 's/@VER@/%VER%/g' vs%YEAR%_compiler_vars.bat
 sed -i 's/@update_version@/%update_version%/g' vs%YEAR%_compiler_vars.bat
 sed -i 's/@cross_compiler_target_platform@/%cross_compiler_target_platform%/g' vs%YEAR%_compiler_vars.bat
+sed -i 's/@tools_version@/%tools_version%/g' vs%YEAR%_compiler_vars.bat
 popd

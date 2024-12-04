@@ -17,5 +17,5 @@ runtime_version:
   - 14.42.34433
 # SDK release page: https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/
 sdk_version:
-  - 10.0.26100.0
+  - 10.0.22621.0
 # we could zip all these together, and we should do that if there's ever more than one version supported at once.  I don't think that's currently possible, though.

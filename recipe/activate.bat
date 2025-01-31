@@ -80,7 +80,7 @@ IF "@cross_compiler_target_platform@" == "win-64" (
 
 pushd %VSINSTALLDIR%
 set VSCMD_DEBUG=1
-CALL "VC\Auxiliary\Build\vcvars%BITS%.bat" -vcvars_ver=14.41 %WindowsSDKVer%
+CALL "VC\Auxiliary\Build\vcvars%BITS%.bat" -vcvars_ver=14.42 %WindowsSDKVer%
 popd
 
 :: CMAKE configuration

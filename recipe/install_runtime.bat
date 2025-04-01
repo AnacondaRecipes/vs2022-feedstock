@@ -10,7 +10,7 @@ if "%ARCH%"=="64" (
 set MSC_VER=2022
 
 REM ========== This one comes from visual studio 2022
-set "VC_VER=143"
+set "VC_VER=%msvc_version%"
 
 set "BT_ROOT="
 for /f "usebackq tokens=*" %%i in (`vswhere.exe -nologo -products * -version ^[17.0^,18.0^] -property installationPath`) do (

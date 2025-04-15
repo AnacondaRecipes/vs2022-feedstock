@@ -27,7 +27,7 @@ for /f "usebackq tokens=*" %%i in (`vswhere.exe -nologo -products * -version ^[1
 )
 if not exist "%VSINSTALLDIR%" (
     :: VS2022 install but with vs2017/vs2019 compiler stuff installed
-	for /f "usebackq tokens=*" %%i in (`vswhere.exe -nologo -products * -requires Microsoft.VisualStudio.Component.VC.v143.x86.x64 -property installationPath`) do (
+	for /f "usebackq tokens=*" %%i in (`vswhere.exe -nologo -products * -requires Microsoft.VisualStudio.Component.VC.v@msvc_version@.x86.x64 -property installationPath`) do (
 	:: There is no trailing back-slash from the vswhere, and may make vcvars64.bat fail, so force add it
 	set "VSINSTALLDIR=%%i\"
 	)
@@ -90,7 +90,7 @@ popd
 set "CMAKE_GEN=Visual Studio @VER@ @YEAR@"
 IF "%CMAKE_GENERATOR%" == "" SET "CMAKE_GENERATOR=%CMAKE_GEN%"
 IF "%CMAKE_GENERATOR_PLATFORM%" == "" SET "CMAKE_GENERATOR_PLATFORM=%CMAKE_PLAT%"
-IF "%CMAKE_GENERATOR_TOOLSET%" == "" SET "CMAKE_GENERATOR_TOOLSET=v143"
+IF "%CMAKE_GENERATOR_TOOLSET%" == "" SET "CMAKE_GENERATOR_TOOLSET=v@msvc_version@"
 
 :GetWin10SdkDir
 call :GetWin10SdkDirHelper HKLM\SOFTWARE\Wow6432Node > nul 2>&1
